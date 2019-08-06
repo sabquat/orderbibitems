@@ -10,11 +10,27 @@ if len(sys.argv) < 2:
     print "Usage: python ordercitations.py filename.tex"
 else:
   file = sys.argv[1]
+  
+started = False
+items = {}
+for line in open(file,"r"):
+    if line.startswith('\\end{thebibliography}'):
+        started = False
+    if started:
+        if line.startswith('\\bibitem'):
+            name = re.findall( 'bibitem{(.*?)\}', line )[0].strip(' \t\n\r')
+            items[name] = line.strip('\n\r')
+            print name
+
+    if not started and line.startswith('\\begin{thebibliography}'):
+        started = True
 
 cites = []
 count = {}
 emptyCount = 0
 for line in open(file,"r"):
+    if line[0] == '%':
+        continue
     for m in re.findall( 'cite{(.*?)\}', line ):
         for cite in  m.split(","):
             temp = cite.strip(' \t\n\r');
@@ -34,3 +50,9 @@ CRED = '\033[91m'
 CEND = '\033[0m'
 if emptyCount:
     print (CRED + "warning: " + str(emptyCount) + " empty cite{}" + CEND)
+
+for c in cites:
+    del items[c]
+	
+for item in items:
+	print (CRED + "warning: " + items[item] + " is unused" + CEND) 
