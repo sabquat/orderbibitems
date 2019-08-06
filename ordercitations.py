@@ -20,7 +20,6 @@ for line in open(file,"r"):
         if line.startswith('\\bibitem'):
             name = re.findall( 'bibitem{(.*?)\}', line )[0].strip(' \t\n\r')
             items[name] = line.strip('\n\r')
-            print name
 
     if not started and line.startswith('\\begin{thebibliography}'):
         started = True
