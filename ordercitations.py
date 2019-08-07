@@ -54,7 +54,7 @@ for c in cites:
     if c in items:
         del items[c]
     else:
-        print (CRED + "warning: " + c + " is cited but not listed in bibitem" + CEND)
+        print (CRED + "warning: " + c + " is cited but not listed in bibliography" + CEND)
 	
 for item in items:
 	print (CRED + "warning: " + items[item] + " is unused" + CEND) 
