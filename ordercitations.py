@@ -51,7 +51,10 @@ if emptyCount:
     print (CRED + "warning: " + str(emptyCount) + " empty cite{}" + CEND)
 
 for c in cites:
-    del items[c]
+    if c in items:
+        del items[c]
+    else:
+        print (CRED + "warning: " + c + " is cited but not listed in bibitem" + CEND)
 	
 for item in items:
 	print (CRED + "warning: " + items[item] + " is unused" + CEND) 
